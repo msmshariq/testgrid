@@ -32,7 +32,7 @@ INPUT_DIR=$2
 OUTPUT_DIR=$4
 source $INPUT_DIR/testplan-props.properties
 
-GCLOUD_SDK_FILE="google-cloud-sdk-247.0.0-linux-x86_64.tar.gz"
+#GCLOUD_SDK_FILE="google-cloud-sdk-247.0.0-linux-x86_64.tar.gz"
 
 #if the cluster name is not specified through input parametes it is assumed that the default
 #testgrid cluster is used for the creation of resources.
@@ -47,39 +47,39 @@ fi
 
 #functions
 
-function check_tools() {
-
-    echo "Please enable google cluster API, if not enabled."
-    if ! type 'gcloud'
-    then
-        echo "installing gcloud - google cloud command line tool..."
-        set -x
-        wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-247.0.0-linux-x86_64.tar.gz
-        tar -xzf google-cloud-sdk-247.0.0-linux-x86_64.tar.gz
-        cd google-cloud-sdk
-        CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./install.sh
-        source path.bash.inc && source completion.bash.inc
-        cd ..
-        set +x
-    fi
-    
-    if ! type 'kubectl'
-    then
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl
-        chmod +x ./kubectl
-        sudo mv ./kubectl /usr/bin/kubectl
-        which kubectl
-        kubectl version
-    else
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl
-        chmod +x ./kubectl
-        dir=$(which kubectl)
-        sudo mv ./kubectl $dir
-        which kubectl
-        kubectl version
-    fi
-
-}
+#function check_tools() {
+#
+#    echo "Please enable google cluster API, if not enabled."
+#    if ! type 'gcloud'
+#    then
+#        echo "installing gcloud - google cloud command line tool..."
+#        set -x
+#        wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-247.0.0-linux-x86_64.tar.gz
+#        tar -xzf google-cloud-sdk-247.0.0-linux-x86_64.tar.gz
+#        cd google-cloud-sdk
+#        CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./install.sh
+#        source path.bash.inc && source completion.bash.inc
+#        cd ..
+#        set +x
+#    fi
+#
+#    if ! type 'kubectl'
+#    then
+#        curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl
+#        chmod +x ./kubectl
+#        sudo mv ./kubectl /usr/bin/kubectl
+#        which kubectl
+#        kubectl version
+#    else
+#        curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.12.0/bin/linux/amd64/kubectl
+#        chmod +x ./kubectl
+#        dir=$(which kubectl)
+#        sudo mv ./kubectl $dir
+#        which kubectl
+#        kubectl version
+#    fi
+#
+#}
 
 
 function auth() {
@@ -140,15 +140,15 @@ function print_summary() {
 function install_helm(){
 
   #if helm is not installed in the cluster, helm and tiller will be installed.
-  if ! type 'helm'
-  then
-    wget https://get.helm.sh/helm-v3.0.0-alpha.2-linux-amd64.tar.gz
-    tar -zxvf helm-v3.0.0-alpha.2-linux-amd64.tar.gz
-    sudo chmod + linux-amd64/helm
-    sudo mv linux-amd64/helm /usr/bin
-    helm init
-    helm version
-  fi
+#  if ! type 'helm'
+#  then
+#    wget https://get.helm.sh/helm-v3.0.0-alpha.2-linux-amd64.tar.gz
+#    tar -zxvf helm-v3.0.0-alpha.2-linux-amd64.tar.gz
+#    sudo chmod + linux-amd64/helm
+#    sudo mv linux-amd64/helm /usr/bin
+#    helm init
+#    helm version
+#  fi
   if [[ ! -d /home/ubuntu/.helm ]]; then
        echo "Helm is already installed. But not initialized. Init before using"
     helm init
@@ -156,7 +156,7 @@ function install_helm(){
 }
 
 function infra_creation() {
-    check_tools
+#    check_tools
     auth
     create_namespace
     set_properties
